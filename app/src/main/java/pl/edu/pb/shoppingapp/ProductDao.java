@@ -23,12 +23,12 @@ public interface ProductDao {
     @Delete
     void delete(Product product);
 
-    @Query("DELETE FROM products")
+    @Query("DELETE FROM Products")
     void deleteAll();
 
-    @Query("SELECT * FROM products ORDER BY title")
+    @Query("SELECT * FROM Products ORDER BY title")
     LiveData<List<Product>> findAll();
 
-    @Query("SELECT * FROM products WHERE title LIKE :title")
+    @Query("SELECT * FROM Products WHERE title LIKE :title")
     List<Product> findProductWithTitle(String title);
 }

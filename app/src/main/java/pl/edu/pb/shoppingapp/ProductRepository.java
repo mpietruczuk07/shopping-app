@@ -2,6 +2,7 @@ package pl.edu.pb.shoppingapp;
 
 import android.app.Application;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class ProductRepository {
         ProductDatabase.databaseWriteExecutor.execute(() -> productDao.update(product));
     }
 
-    void delete(Product product) {
-        ProductDatabase.databaseWriteExecutor.execute(() -> productDao.delete(product));
+    void delete(Product product){
+        ProductDatabase.databaseWriteExecutor.execute(()->productDao.delete(product));
     }
 }

@@ -1,11 +1,13 @@
 package pl.edu.pb.shoppingapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,12 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ProductViewModel productViewModel;
+    private Product editedProduct;
+    public static final int NEW_PRODUCT_ACTIVITY_REQUEST_CODE = 1;
+    public static final int EDIT_PRODUCT_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,33 @@ public class MainActivity extends AppCompatActivity {
 
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         productViewModel.findAll().observe(this, adapter::setProducts);
+
+        FloatingActionButton addBookButton = findViewById(R.id.add_button);
+        addBookButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, EditProductActivity.class);
+            startActivityForResult(intent, NEW_PRODUCT_ACTIVITY_REQUEST_CODE);
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_PRODUCT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            Product product = new Product(data.getStringExtra(EditProductActivity.EXTRA_EDIT_PRODUCT_TITLE), 1, "TEST", false);
+            productViewModel.insert(product);
+            //snackbar!!!
+        }
+
+        if (requestCode == EDIT_PRODUCT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            editedProduct.setTitle(data.getStringExtra(EditProductActivity.EXTRA_EDIT_PRODUCT_TITLE));
+//            editedProduct.setNote(data.getStringExtra(EditProductActivity.EXTRA_EDIT_PRODUCT_NOTE));
+//            editedProduct.setNote(data.getStringExtra(EditProductActivity.EXTRA_EDIT_PRODUCT_NOTE));
+            productViewModel.update(editedProduct);
+            editedProduct = null;
+            //snackbar!!!
+        }
     }
 
     private class ProductHolder extends RecyclerView.ViewHolder {
@@ -46,14 +79,22 @@ public class MainActivity extends AppCompatActivity {
             productQuantityTextView = itemView.findViewById((R.id.product_quantity));
 
             View productItem = itemView.findViewById(R.id.product_item);
-            if (productItem != null) {
-                productItem.setOnLongClickListener(v -> {
-                    productViewModel.delete(product);
-                    Snackbar.make(findViewById(R.id.main_view), getString(R.string.book_deleted), Snackbar.LENGTH_LONG).show();
-                    return true;
-                });
-                // on click do detali
-            }
+
+            productItem.setOnLongClickListener(v -> {
+                productViewModel.delete(product);
+                System.out.println("Skasowano");
+                Snackbar.make(findViewById(R.id.main_view), getString(R.string.book_deleted), Snackbar.LENGTH_LONG).show();
+                return true;
+            });
+
+            productItem.setOnClickListener(v->{
+                editedProduct = product;
+                Intent intent  = new Intent(MainActivity.this, EditProductActivity.class);
+                intent.putExtra(EditProductActivity.EXTRA_EDIT_PRODUCT_TITLE, productTitleTextView.getText());
+                //intent.putExtra(EditProductActivity.EXTRA_EDIT_PRODUCT_NOTE,  productNoteTextView.getText());
+                startActivityForResult(intent, EDIT_PRODUCT_ACTIVITY_REQUEST_CODE);
+            });
+
         }
 
         public void bind(Product product) {
@@ -77,18 +118,17 @@ public class MainActivity extends AppCompatActivity {
             if (products != null) {
                 Product book = products.get(position);
                 holder.bind(book);
-            }
-            else {
+            } else {
+                System.out.println("brak");
                 Log.d("MainActivity", "No products");
             }
         }
 
         @Override
         public int getItemCount() {
-            if ( products != null) {
+            if (products != null) {
                 return products.size();
-            }
-            else {
+            } else {
                 return 0;
             }
         }
