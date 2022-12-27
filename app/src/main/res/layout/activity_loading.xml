@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".LoadingAcitivity">
+    tools:context=".Activity.LoadingActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.65"
+        android:alpha="0.45"
         android:scaleType="centerCrop"
         android:src="@drawable/loading_screen_background"/>
 
@@ -19,7 +19,7 @@
         android:text="@string/app_name"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
-        android:textSize="40dp"
+        android:textSize="45dp"
         android:textStyle="bold"/>
 
 </RelativeLayout>

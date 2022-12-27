@@ -1,4 +1,4 @@
-package pl.edu.pb.shoppingapp;
+package pl.edu.pb.shoppingapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import pl.edu.pb.shoppingapp.R;
 
 public class EditProductActivity extends AppCompatActivity {
     public static final String EXTRA_EDIT_PRODUCT_TITLE = "title";

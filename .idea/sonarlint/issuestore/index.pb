@@ -1,19 +1,9 @@
 
-i
-9app/src/main/java/pl/edu/pb/shoppingapp/MainActivity.java,d/3/d35533af9fde742fe3979dc2d9d5333170e152c4
 n
->app/src/main/java/pl/edu/pb/shoppingapp/ProductRepository.java,2/0/203047deb3d0f15c3da36277033d02211b7eead6
+>app/src/main/java/pl/edu/pb/shoppingapp/ProductRepository.java,2\0\203047deb3d0f15c3da36277033d02211b7eead6
 l
-<app/src/main/java/pl/edu/pb/shoppingapp/ProductDatabase.java,9/d/9dd645e9b886534f28bedd2d88882acef9f9c1bb
+<app/src/main/java/pl/edu/pb/shoppingapp/ProductDatabase.java,9\d\9dd645e9b886534f28bedd2d88882acef9f9c1bb
 g
-7app/src/main/java/pl/edu/pb/shoppingapp/ProductDao.java,7/7/777046441617933510abbb49322e9247516e32d6
+7app/src/main/java/pl/edu/pb/shoppingapp/ProductDao.java,7\7\777046441617933510abbb49322e9247516e32d6
 d
-4app/src/main/java/pl/edu/pb/shoppingapp/Product.java,2/e/2ee486c61a950a3274cf2df09232d962bdc84eb6
-m
-=app/src/main/java/pl/edu/pb/shoppingapp/ProductViewModel.java,d/0/d09c02d60f169b627cfa76deeb965eed4ea0cad3
-s
-Capp/src/main/java/pl/edu/pb/shoppingapp/ForgetPasswordActivity.java,5/9/597082bd97f32487ab8519aa08ec76084e206dd7
-m
-=app/src/main/java/pl/edu/pb/shoppingapp/LoadingAcitivity.java,1/d/1dce9b226932d730ab4d424928af8ac151f184cc
-j
-:app/src/main/java/pl/edu/pb/shoppingapp/LoginActivity.java,c/1/c1bb9b97f0c7c1e96df197e8c4e4770cdf6bfcad
+4app/src/main/java/pl/edu/pb/shoppingapp/Product.java,2\e\2ee486c61a950a3274cf2df09232d962bdc84eb6

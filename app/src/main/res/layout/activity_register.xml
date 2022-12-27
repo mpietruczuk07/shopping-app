@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="RegisterActivity">
+    tools:context=".Activity.RegisterActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:textSize="40dp"/>
+                android:textSize="45dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -67,6 +67,7 @@
                 android:hint="@string/username_hint"
                 android:inputType="text"
                 android:maxLines="1"
+                android:textColorHint="@color/white"
                 android:textColor="@color/white"/>
 
             <EditText
@@ -82,6 +83,7 @@
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:textColorHint="@color/white"
                 android:textColor="@color/white"/>
 
             <EditText
@@ -97,6 +99,7 @@
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:textColorHint="@color/white"
                 android:textColor="@color/white"/>
 
             <com.google.android.material.button.MaterialButton

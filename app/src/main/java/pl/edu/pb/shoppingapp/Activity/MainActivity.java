@@ -1,4 +1,4 @@
-package pl.edu.pb.shoppingapp;
+package pl.edu.pb.shoppingapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +19,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+
+import pl.edu.pb.shoppingapp.Product;
+import pl.edu.pb.shoppingapp.ProductViewModel;
+import pl.edu.pb.shoppingapp.R;
 
 public class MainActivity extends AppCompatActivity {
     private ProductViewModel productViewModel;
