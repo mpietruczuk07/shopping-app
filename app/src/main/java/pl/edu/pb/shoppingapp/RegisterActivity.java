@@ -1,4 +1,4 @@
-xpackage pl.edu.pb.shoppingapp;
+package pl.edu.pb.shoppingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
