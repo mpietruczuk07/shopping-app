@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Shopping App</string>
     <string name="book_deleted">Book deleted</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="email_hint">Email</string>
+    <string name="signup_text">Sign up</string>
+    <string name="login_text">Login</string>
+    <string name="forget_password_text">Forget password?</string>
+    <string name="reset_password_text">Reset password</string>
+    <string name="login_string">Already have an account? Login <b>here</b>.</string>
 </resources>
