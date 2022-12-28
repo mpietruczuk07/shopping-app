@@ -10,8 +10,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.25"
-        android:src="@drawable/login_background"
+        android:alpha="0.2"
+        android:src="@drawable/register_background"
         android:scaleType="centerCrop"/>
 
     <ImageView
@@ -46,6 +46,7 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="45dp"/>
+
         </LinearLayout>
 
         <LinearLayout

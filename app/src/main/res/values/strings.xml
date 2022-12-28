@@ -17,12 +17,17 @@
 
     <string name="register_success">User registered successfully!</string>
     <string name="register_error">A problem with user registration occurred!</string>
-    <string name="email_confirmation">Please, confirm your email.</string>
+    <string name="email_confirmation">Please confirm your email.</string>
     <string name="email_confirmation_error">A problem with email confirmation occurred!</string>
     <string name="login_error">A problem with login occurred!</string>
-    <string name="reset_email_sent">An email message was sent</string>
-    <string name="error">Error occurred!</string>
-    <string name="biometric_title">Biometric authentication</string>
-    <string name="biometric_description">Use biometrics to authenticate</string>
-    <string name="error_11">You do not have any fingerprints</string>
+
+    <string name="email_reset_confirmation">Check your email and follow the instructions.</string>
+    <string name="email_reset_error">A problem with password reset occurred!</string>
+
+    <string name="biometrics_title">Biometric authentication</string>
+    <string name="biometrics_description">Use biometrics to authenticate.</string>
+    <string name="no_biometrics">You do not have set any biometric authorization!</string>
+    <string name="no_biometric_hardware">There is no suitable hardware to handle the biometric authorization.</string>
+    <string name="biometric_hardware_unavailable">The biometric hardware is unavailable! Please check if it does work properly.</string>
+    <string name="authentication_failed">Authentication failed!</string>
 </resources>

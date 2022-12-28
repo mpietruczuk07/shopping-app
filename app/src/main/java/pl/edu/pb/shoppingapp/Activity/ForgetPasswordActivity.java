@@ -24,6 +24,10 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         binding = ActivityForgetPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.backBtn.setOnClickListener(v->{
+            onBackPressed();
+        });
+
         binding.forgetBtn.setOnClickListener(v -> {
             resetPassword();
         });
@@ -32,6 +36,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private void resetPassword() {
         firebaseAuth = FirebaseAuth.getInstance();
         email = binding.emailFieldReset.getText().toString().trim();
+
         if (email.isEmpty()) {
             binding.emailFieldReset.setError(getText(R.string.email_required));
             binding.emailFieldReset.requestFocus();
@@ -42,15 +47,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
                         Toast.makeText(ForgetPasswordActivity.this,
-                                getText(R.string.reset_email_sent), Toast.LENGTH_SHORT).show();
+                                getText(R.string.email_reset_confirmation), Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     }
                     else {
-                        Toast.makeText(ForgetPasswordActivity.this, getText(R.string.error), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgetPasswordActivity.this, getText(R.string.email_reset_error) + " " + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
-
     }
 }

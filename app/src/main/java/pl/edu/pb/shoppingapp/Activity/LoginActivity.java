@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser() {
         firebaseAuth = FirebaseAuth.getInstance();
-
         email = binding.loginEmail.getText().toString().trim();
         password = binding.loginPassword.getText().toString().trim();
 
