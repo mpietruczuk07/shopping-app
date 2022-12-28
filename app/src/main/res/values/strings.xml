@@ -20,4 +20,9 @@
     <string name="email_confirmation">Please, confirm your email.</string>
     <string name="email_confirmation_error">A problem with email confirmation occurred!</string>
     <string name="login_error">A problem with login occurred!</string>
+    <string name="reset_email_sent">An email message was sent</string>
+    <string name="error">Error occurred!</string>
+    <string name="biometric_title">Biometric authentication</string>
+    <string name="biometric_description">Use biometrics to authenticate</string>
+    <string name="error_11">You do not have any fingerprints</string>
 </resources>
