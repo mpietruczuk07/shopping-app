@@ -59,4 +59,10 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    //draw curves
+    implementation 'io.github.florent37:shapeofview:1.4.7'
+
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
