@@ -9,11 +9,14 @@
     <string name="forget_password_text">Forget password?</string>
     <string name="reset_password_text">Reset password</string>
     <string name="login_string">Already have an account? Login <b>here</b>.</string>
+    <string name="verify_email">Verify email</string>
+    <string name="sample_email">email@email.com</string>
 
     <string name="username_required">Username is required!</string>
     <string name="email_required">Email is required!</string>
     <string name="password_required">Password is required!</string>
     <string name="password_too_short">Password is too short! It must contain at least 8 characters.</string>
+    <string name="change_password">Change password</string>
 
     <string name="register_success">User registered successfully!</string>
     <string name="register_error">A problem with user registration occurred!</string>
@@ -41,8 +44,8 @@
     <string name="notifications_header">Notifications</string>
     <string name="help_header">Help</string>
     <string name="info_header">Info</string>
+    <string name="notification_settings">Show notifications</string>
     <string name="logout_header">Logout</string>
+    <string name="logged_out_text">Logged out successfully!</string>
     <string name="app_version"><b>App version:</b> alpha 0.5</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

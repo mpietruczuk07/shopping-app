@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
@@ -39,7 +38,7 @@ public class SettingsFragment extends Fragment {
 
         binding.biometricSwitch.setOnCheckedChangeListener((switchView, isChecked) -> {
             SharedPreferences.Editor editor = requireActivity()
-                    .getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+                    .getSharedPreferences("user_biometrics", Context.MODE_PRIVATE).edit();
             if (isChecked) {
                 editor.putBoolean("biometrics", true);
             } else {
