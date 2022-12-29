@@ -48,4 +48,6 @@
     <string name="logout_header">Logout</string>
     <string name="logged_out_text">Logged out successfully!</string>
     <string name="app_version"><b>App version:</b> alpha 0.5</string>
+
+    <string name="theme_change">Select app theme</string>
 </resources>
