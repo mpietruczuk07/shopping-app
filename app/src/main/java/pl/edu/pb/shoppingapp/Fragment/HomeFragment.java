@@ -24,11 +24,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import pl.edu.pb.shoppingapp.Activity.EditProductActivity;
-import pl.edu.pb.shoppingapp.Activity.MainActivity;
 import pl.edu.pb.shoppingapp.Product;
 import pl.edu.pb.shoppingapp.ProductViewModel;
 import pl.edu.pb.shoppingapp.R;
-import pl.edu.pb.shoppingapp.databinding.ActivityMainBinding;
 import pl.edu.pb.shoppingapp.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -106,7 +104,7 @@ public class HomeFragment extends Fragment {
             productItem.setOnLongClickListener(v -> {
                 productViewModel.delete(product);
                 System.out.println("Skasowano");
-                Snackbar.make(v.findViewById(R.id.main_view), getString(R.string.book_deleted), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(requireActivity().findViewById(R.id.recyclerview), getString(R.string.book_deleted), Snackbar.LENGTH_LONG).show();
                 return true;
             });
 

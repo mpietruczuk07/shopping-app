@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingApp"
         tools:targetApi="31">
+
+        <meta-data  android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCl1yGPZ3mpxxxxxxxAz2R-t7zcWVzrHUL9k"/>
+
         <activity
             android:name=".Activity.ForgetPasswordActivity"
             android:exported="false">
