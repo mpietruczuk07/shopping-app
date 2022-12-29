@@ -7,3 +7,5 @@ g
 7app/src/main/java/pl/edu/pb/shoppingapp/ProductDao.java,7\7\777046441617933510abbb49322e9247516e32d6
 d
 4app/src/main/java/pl/edu/pb/shoppingapp/Product.java,2\e\2ee486c61a950a3274cf2df09232d962bdc84eb6
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e

@@ -28,6 +28,7 @@ import pl.edu.pb.shoppingapp.Fragment.FavouriteShopsFragment;
 import pl.edu.pb.shoppingapp.Fragment.HomeFragment;
 import pl.edu.pb.shoppingapp.Fragment.MapsFragment;
 import pl.edu.pb.shoppingapp.Fragment.MoreFragment;
+import pl.edu.pb.shoppingapp.Fragment.SettingsFragment;
 import pl.edu.pb.shoppingapp.Product;
 import pl.edu.pb.shoppingapp.ProductViewModel;
 import pl.edu.pb.shoppingapp.R;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new FavouriteShopsFragment());
                     break;
                 case R.id.more_btn:
-                    replaceFragment(new MoreFragment());
+                    replaceFragment(new SettingsFragment());
                     break;
             }
             return true;

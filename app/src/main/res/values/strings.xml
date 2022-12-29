@@ -43,4 +43,6 @@
     <string name="info_header">Info</string>
     <string name="logout_header">Logout</string>
     <string name="app_version"><b>App version:</b> alpha 0.5</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
