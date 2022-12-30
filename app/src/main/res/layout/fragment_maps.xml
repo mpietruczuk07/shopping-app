@@ -18,6 +18,7 @@
         android:layout_height="120dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
@@ -41,7 +42,7 @@
                 android:drawableStart="@drawable/ic_baseline_location_searching_24"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/purple_700"
-                android:hint="Search place"
+                android:hint="@string/search_place_hint"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColorHint="@color/black" />

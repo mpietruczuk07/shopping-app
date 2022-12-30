@@ -64,4 +64,7 @@
     <string name="location_sensor_enabled">Location sensor is now enabled.</string>
     <string name="location_sensor_disabled">Location sensor is disabled. Enable for the best experience with this app.</string>
     <string name="location_change_unavailable">Location change is unavailable. Please do it manually in your phone settings.</string>
+
+    <string name="search_place_hint">Search place</string>
+    <string name="current_location">Current location</string>
 </resources>
