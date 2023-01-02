@@ -238,8 +238,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-
-    //change name to current user!
     private void moveToLocation(Location location) {
         if (location != null) {
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM);

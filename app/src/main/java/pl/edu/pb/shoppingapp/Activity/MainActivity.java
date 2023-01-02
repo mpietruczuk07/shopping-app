@@ -1,11 +1,17 @@
 package pl.edu.pb.shoppingapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import pl.edu.pb.shoppingapp.Fragment.FavouriteShopsFragment;
 import pl.edu.pb.shoppingapp.Fragment.HomeFragment;
@@ -16,6 +22,9 @@ import pl.edu.pb.shoppingapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+
+    private static final String TAG = "MAIN_ACTIVITY";
+    private static final String TOPIC = "GENERAL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,26 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             return true;
+        });
+
+        //to be deleted in the future!
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                System.out.println(task.getResult());
+            }
+        });
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "Message received");
+                }
+                else{
+                    Log.d(TAG, "Message receiving error!");
+                }
+            }
         });
     }
 
