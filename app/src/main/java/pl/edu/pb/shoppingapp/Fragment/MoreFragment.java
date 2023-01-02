@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,12 +25,14 @@ import pl.edu.pb.shoppingapp.databinding.FragmentMoreBinding;
 
 public class MoreFragment extends Fragment {
     private FragmentMoreBinding binding;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentMoreBinding.inflate(getLayoutInflater());
+        firebaseAuth = FirebaseAuth.getInstance();
 
         binding.cardSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,14 @@ public class MoreFragment extends Fragment {
         binding.cardInfo.setOnClickListener(v->infoDialog());
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.emailText.setText(firebaseAuth.getCurrentUser().getEmail());
+        binding.usernameText.setText(firebaseAuth.getCurrentUser().getDisplayName());
     }
 
     private void infoDialog() {

@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -72,24 +73,42 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        UserModel userModel = new UserModel(username, email, true);
-                        databaseReference.child(firebaseAuth.getUid()).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                firebaseAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest
+                                .Builder().setDisplayName(username).build();
+                        firebaseAuth.getCurrentUser().updateProfile(userProfileChangeRequest)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(RegisterActivity.this, getString(R.string.email_confirmation), Toast.LENGTH_SHORT).show();
-                                        onBackPressed();
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            UserModel userModel = new UserModel(username, email, true);
+                                            databaseReference.child(firebaseAuth.getUid())
+                                                    .setValue(userModel)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    firebaseAuth.getCurrentUser().sendEmailVerification()
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Toast.makeText(
+                                                                    RegisterActivity.this,
+                                                                    getString(R.string.email_confirmation),
+                                                                    Toast.LENGTH_SHORT).show();
+                                                            onBackPressed();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
                                     }
                                 });
-                            }
-                        });
-                        Toast.makeText(RegisterActivity.this,  getText(R.string.register_success) +" " +getText(R.string.email_confirmation), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this,  getText(R.string.register_success) +
+                                " " +getText(R.string.email_confirmation), Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     }
                     else{
-                        Toast.makeText(RegisterActivity.this, getText(R.string.register_error) + " " + task.getException(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, getText(R.string.register_error) +
+                                " " + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

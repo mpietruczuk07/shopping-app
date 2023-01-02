@@ -49,6 +49,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.databinding.FragmentMapsBinding;
@@ -63,6 +64,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private LocationManager locationManager;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Marker currentMarker;
+    private FirebaseAuth firebaseAuth;
 
     private static final int LOCATION_REQUEST_CODE = 1000;
     private static final int LOCATION_SENSOR = 2000;
@@ -75,6 +77,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
 
         binding = FragmentMapsBinding.inflate(inflater, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
 
         binding.currentLocationBtn.setOnClickListener(v -> getLocationUpdates());
 
@@ -240,8 +243,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private void moveToLocation(Location location) {
         if (location != null) {
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM);
-            MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(getString(R.string.current_location))
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).snippet("User");
+            MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .title(getString(R.string.current_location))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                    .snippet(firebaseAuth.getCurrentUser().getDisplayName());
 
             if (currentMarker != null) {
                 currentMarker.remove();
