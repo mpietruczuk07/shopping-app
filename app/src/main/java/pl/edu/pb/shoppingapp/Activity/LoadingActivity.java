@@ -6,6 +6,7 @@ import static androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
@@ -93,5 +94,20 @@ public class LoadingActivity extends AppCompatActivity {
                 }
             }
         }, 3000);
+
+        int selectedDarkMode= getSharedPreferences("DARK_MODE", Context.MODE_PRIVATE)
+                .getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM );
+
+        switch(selectedDarkMode) {
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);;
+                break;
+            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
     }
 }

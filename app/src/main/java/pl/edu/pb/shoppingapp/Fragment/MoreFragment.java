@@ -1,6 +1,9 @@
 package pl.edu.pb.shoppingapp.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -45,6 +48,26 @@ public class MoreFragment extends Fragment {
             startActivity(new Intent(getActivity(), LoginActivity.class));
         });
 
+        binding.cardHelp.setOnClickListener(v->{
+            startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:shoppingapp@gmail.com")));
+        });
+
+        binding.cardInfo.setOnClickListener(v->infoDialog());
+
         return binding.getRoot();
+    }
+
+    private void infoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View view = LayoutInflater
+                .from(requireContext())
+                .inflate(R.layout.info_dialog_layout, null, false);
+        builder.setView(view);
+        builder.setTitle(getText(R.string.app_info));
+
+        builder.setNegativeButton(getText(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        }).create().show();
     }
 }
