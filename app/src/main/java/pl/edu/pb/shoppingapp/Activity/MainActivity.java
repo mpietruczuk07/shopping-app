@@ -1,17 +1,26 @@
 package pl.edu.pb.shoppingapp.Activity;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import pl.edu.pb.shoppingapp.Fragment.FavouriteShopsFragment;
@@ -26,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static NotificationViewModel model;
     private ActivityMainBinding binding;
 
+    private static final int NOTIFICATION_REQUEST_CODE = 3000;
     private static final String TAG = "MAIN_ACTIVITY";
     private static final String TOPIC = "GENERAL";
 
@@ -36,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         model = ViewModelProviders.of(this).get(NotificationViewModel.class);
 
+        //askNotificationPermission();
+
         binding.bottomNavMenu.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home_btn:
@@ -45,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new MapsFragment());
                     break;
                 case R.id.favourite_shops_btn:
-                    replaceFragment(new FavouriteShopsFragment());
+                replaceFragment(new FavouriteShopsFragment());
                     break;
                 case R.id.more_btn:
                     replaceFragment(new MoreFragment());
@@ -65,10 +77,9 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Log.d(TAG, "Message received");
-                }
-                else{
+                } else {
                     Log.d(TAG, "Message receiving error!");
                 }
             }
@@ -80,5 +91,38 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_view, fragment);
         fragmentTransaction.commit();
+    }
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            Log.d(TAG, "Location permission granted");
+        } else {
+        }
+    });
+
+    private void askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case NOTIFICATION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "Location permission granted");
+                } else {
+                    Snackbar.make(this, findViewById(R.id.main_view), getText(R.string.notification_permission_denied), Snackbar.LENGTH_LONG).show();
+                }
+        }
     }
 }

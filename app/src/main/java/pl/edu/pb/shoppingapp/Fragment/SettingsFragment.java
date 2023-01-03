@@ -1,14 +1,17 @@
 package pl.edu.pb.shoppingapp.Fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -36,6 +39,8 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
     private FirebaseAuth firebaseAuth;
 
+    private static final String TAG = "SETTINGS_FRAGMENT";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +58,34 @@ public class SettingsFragment extends Fragment {
             }
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)) {
+                binding.cardNotifications.setVisibility(View.GONE);
+            } else {
+                boolean areNotificationsEnabled = requireActivity()
+                        .getSharedPreferences("user_notifications", Context.MODE_PRIVATE)
+                        .getBoolean("notifications", true);
+                if (areNotificationsEnabled) {
+                    binding.notificationsSwitch.setChecked(true);
+                }
+            }
+        } else {
+            boolean areNotificationsEnabled = requireActivity()
+                    .getSharedPreferences("user_notifications", Context.MODE_PRIVATE)
+                    .getBoolean("notifications", true);
+            if (areNotificationsEnabled) {
+                binding.notificationsSwitch.setChecked(true);
+            }
+        }
+
+        binding.backBtn.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
+        });
+
+        binding.usernameText.setOnClickListener(v -> {
+            usernameDialog();
+        });
+
         binding.biometricSwitch.setOnCheckedChangeListener((switchView, isChecked) -> {
             SharedPreferences.Editor editor = requireActivity()
                     .getSharedPreferences("user_biometrics", Context.MODE_PRIVATE).edit();
@@ -64,12 +97,17 @@ public class SettingsFragment extends Fragment {
             editor.apply();
         });
 
-        binding.backBtn.setOnClickListener(v -> {
-            requireActivity().onBackPressed();
-        });
-
-        binding.usernameText.setOnClickListener(v -> {
-            usernameDialog();
+        binding.notificationsSwitch.setOnCheckedChangeListener((switchView, isChecked) -> {
+            SharedPreferences.Editor editor = requireActivity()
+                    .getSharedPreferences("user_notifications", Context.MODE_PRIVATE).edit();
+            if (isChecked) {
+                editor.putBoolean("notifications", true);
+                System.out.println("Checked");
+            } else {
+                editor.putBoolean("notifications", false);
+                System.out.println("Unchecked");
+            }
+            editor.apply();
         });
 
         binding.cardTheme.setOnClickListener(new View.OnClickListener() {
@@ -117,8 +155,7 @@ public class SettingsFragment extends Fragment {
                                 databaseReference.child(firebaseAuth.getUid()).updateChildren(map);
                                 binding.usernameText.setText(username);
                                 Snackbar.make(requireActivity().findViewById(R.id.settings_linear_layout), getText(R.string.username_updated), Snackbar.LENGTH_LONG).show();
-                            }
-                            else {
+                            } else {
                                 Snackbar.make(requireActivity().findViewById(R.id.settings_linear_layout), getText(R.string.username_error), Snackbar.LENGTH_LONG).show();
                             }
                         }

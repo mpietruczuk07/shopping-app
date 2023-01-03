@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 
@@ -29,7 +30,14 @@ public class NotificationService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
 
-        showNotification(message.getNotification().getTitle(), message.getNotification().getBody());
+        boolean areNotificationsEnabled = getSharedPreferences("user_notifications", Context.MODE_PRIVATE)
+                .getBoolean("notifications", true);
+
+        if(areNotificationsEnabled){
+            showNotification(message.getNotification().getTitle(), message.getNotification().getBody());
+        }
+
+       //showNotification(message.getNotification().getTitle(), message.getNotification().getBody());
         addNotification(message.getNotification().getTitle(), message.getNotification().getBody());
     }
 

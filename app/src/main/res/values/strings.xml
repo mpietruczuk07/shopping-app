@@ -79,4 +79,6 @@
 
     <string name="notification_title">Notification title</string>
     <string name="notification_body">Notification body</string>
+    <string name="notification_permission_denied">Notification permission denied. You can change it in your phone settings.</string>
+    <string name="notification_permission_info">Without notification permission you will not see push notifications.</string>
 </resources>
