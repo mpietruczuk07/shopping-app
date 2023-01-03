@@ -51,33 +51,32 @@ public class NotificationsFragment extends Fragment {
         notificationViewModel.findAll().observe(getViewLifecycleOwner(), adapter::setNotifications);
     }
 
-    private class NotificationHolder extends RecyclerView.ViewHolder{
+    private class NotificationHolder extends RecyclerView.ViewHolder {
         private TextView notificationTitleTextView;
         private TextView notificationBodyTextView;
         private Notification notification;
 
-        public NotificationHolder(LayoutInflater inflater, ViewGroup parent){
+        public NotificationHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.notification_item_list, parent, false));
 
             notificationTitleTextView = itemView.findViewById(R.id.notification_title);
             notificationBodyTextView = itemView.findViewById(R.id.notification_body);
 
-            View notificationItem = itemView.findViewById(R.id.notification_item);
+            View notificationItem = itemView.findViewById(R.id.notification_delete);
 
-           notificationItem.setOnLongClickListener(v->{
-               notificationViewModel.delete(notification);
-               return true;
-           });
+            notificationItem.setOnClickListener(v -> {
+                notificationViewModel.delete(notification);
+            });
         }
 
-        public void bind(Notification notification){
+        public void bind(Notification notification) {
             notificationTitleTextView.setText(notification.getTitle());
             notificationBodyTextView.setText(notification.getBody());
             this.notification = notification;
         }
     }
 
-    private class NotificationAdapter extends RecyclerView.Adapter<NotificationHolder>{
+    private class NotificationAdapter extends RecyclerView.Adapter<NotificationHolder> {
         private List<Notification> notifications;
 
         @NonNull
@@ -88,21 +87,19 @@ public class NotificationsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull NotificationHolder holder, int position) {
-            if(notifications != null){
+            if (notifications != null) {
                 Notification notification = notifications.get(position);
                 holder.bind(notification);
-            }
-            else{
+            } else {
                 Log.d(TAG, "No notifications");
             }
         }
 
         @Override
         public int getItemCount() {
-            if(notifications!=null){
+            if (notifications != null) {
                 return notifications.size();
-            }
-            else{
+            } else {
                 return 0;
             }
         }
