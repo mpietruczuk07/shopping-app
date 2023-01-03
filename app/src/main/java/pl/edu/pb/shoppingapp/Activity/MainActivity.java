@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +18,12 @@ import pl.edu.pb.shoppingapp.Fragment.FavouriteShopsFragment;
 import pl.edu.pb.shoppingapp.Fragment.HomeFragment;
 import pl.edu.pb.shoppingapp.Fragment.MapsFragment;
 import pl.edu.pb.shoppingapp.Fragment.MoreFragment;
+import pl.edu.pb.shoppingapp.NotificationViewModel;
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+    public static NotificationViewModel model;
     private ActivityMainBinding binding;
 
     private static final String TAG = "MAIN_ACTIVITY";
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        model = ViewModelProviders.of(this).get(NotificationViewModel.class);
 
         binding.bottomNavMenu.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {

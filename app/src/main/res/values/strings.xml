@@ -44,7 +44,7 @@
     <string name="menu_more">More</string>
 
     <string name="settings_header">Settings</string>
-    <string name="notifications_header">Notifications</string>
+    <string name="notifications_header">Notifications history</string>
     <string name="help_header">Help</string>
     <string name="info_header">Info</string>
     <string name="notification_settings">Show notifications</string>
@@ -76,4 +76,7 @@
     <string name="app_info">App info</string>
 
     <string name="default_notification_channel_id">GENERAL</string>
+
+    <string name="notification_title">Notification title</string>
+    <string name="notification_body">Notification body</string>
 </resources>

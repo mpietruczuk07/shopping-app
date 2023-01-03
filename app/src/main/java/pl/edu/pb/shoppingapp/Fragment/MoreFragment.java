@@ -46,10 +46,16 @@ public class MoreFragment extends Fragment {
             }
         });
 
-        binding.cardLogout.setOnClickListener(v->{
-            FirebaseAuth.getInstance().signOut();
-            Toast.makeText(getContext(), getText(R.string.logged_out_text), Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+        binding.cardNotifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new NotificationsFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_view, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
         });
 
         binding.cardHelp.setOnClickListener(v->{
@@ -57,6 +63,12 @@ public class MoreFragment extends Fragment {
         });
 
         binding.cardInfo.setOnClickListener(v->infoDialog());
+
+        binding.cardLogout.setOnClickListener(v->{
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(getContext(), getText(R.string.logged_out_text), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        });
 
         return binding.getRoot();
     }
