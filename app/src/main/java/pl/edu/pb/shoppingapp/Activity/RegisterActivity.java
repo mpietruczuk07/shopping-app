@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import pl.edu.pb.shoppingapp.R;
-import pl.edu.pb.shoppingapp.UserModel;
+import pl.edu.pb.shoppingapp.Model.UserModel;
 import pl.edu.pb.shoppingapp.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {

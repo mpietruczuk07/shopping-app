@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/emailChangeFragment">
+
+    <fragment
+        android:id="@+id/emailChangeFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.EmailChangeFragment"
+        android:label="fragment_email_change"
+        tools:layout="@layout/fragment_email_change" />
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.AuthenticationFragment"
+        android:label="fragment_authentication"
+        tools:layout="@layout/fragment_authentication" >
+        <argument
+            android:name="isPassword"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_emailChangeFragment"
+            app:destination="@id/emailChangeFragment" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_passwordChangeFragment"
+            app:destination="@id/passwordChangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordChangeFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.PasswordChangeFragment"
+        android:label="fragment_password_change"
+        tools:layout="@layout/fragment_password_change" />
+</navigation>

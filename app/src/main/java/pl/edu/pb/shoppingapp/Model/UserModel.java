@@ -1,4 +1,4 @@
-package pl.edu.pb.shoppingapp;
+package pl.edu.pb.shoppingapp.Model;
 
 public class UserModel {
     String email, username;
