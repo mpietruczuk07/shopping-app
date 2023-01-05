@@ -1,5 +1,6 @@
 package pl.edu.pb.shoppingapp.Model;
 
+import com.google.android.gms.common.api.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -86,6 +86,36 @@ public class SettingsFragment extends Fragment {
             usernameDialog();
         });
 
+        binding.cardEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle data = new Bundle();
+                data.putBoolean("isPassword", false);
+                Fragment fragment = new AuthenticationFragment();
+                fragment.setArguments(data);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_view, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        binding.cardPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle data = new Bundle();
+                data.putBoolean("isPassword", true);
+                Fragment fragment = new AuthenticationFragment();
+                fragment.setArguments(data);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_view, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
         binding.biometricSwitch.setOnCheckedChangeListener((switchView, isChecked) -> {
             SharedPreferences.Editor editor = requireActivity()
                     .getSharedPreferences("user_biometrics", Context.MODE_PRIVATE).edit();

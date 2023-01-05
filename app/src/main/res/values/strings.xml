@@ -19,8 +19,8 @@
     <string name="username_required">Username is required!</string>
     <string name="username_error">Username error!</string>
     <string name="email_required">Email is required!</string>
-    <string name="email_updated">Email is updated.</string>
-    <string name="password_updated">Password is updated.</string>
+    <string name="email_updated">Email updated successfully! Please confirm it and login again.</string>
+    <string name="password_updated">Password updated successfully! Please login again.</string>
     <string name="password_required">Password is required!</string>
     <string name="password_too_short">Password is too short! It must contain at least 8 characters.</string>
     <string name="change_password">Change password</string>
@@ -85,6 +85,12 @@
     <string name="notification_body">Notification body</string>
     <string name="notification_permission_denied">Notification permission denied. You can change it in your phone settings.</string>
     <string name="notification_permission_info">Without notification permission you will not see push notifications.</string>
+
+    <string name="authentication">Authentication</string>
+    <string name="password_change">Password change</string>
+    <string name="email_change">Email change</string>
+    <string name="email_change_input">New email</string>
+    <string name="password_change_input">New password</string>
 
     <string name="API_KEY">AIzaSyCl1yGPZ3mpxxxxxxxAz2R-t7zcWVzrHUL9k</string>
 </resources>

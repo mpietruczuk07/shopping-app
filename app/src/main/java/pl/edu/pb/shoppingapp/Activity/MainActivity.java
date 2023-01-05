@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         model = ViewModelProviders.of(this).get(NotificationViewModel.class);
 
-        //askNotificationPermission();
+        askNotificationPermission();
 
         binding.bottomNavMenu.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {

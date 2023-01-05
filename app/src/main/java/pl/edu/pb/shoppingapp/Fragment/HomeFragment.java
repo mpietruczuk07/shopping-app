@@ -37,7 +37,6 @@ public class HomeFragment extends Fragment {
     public static final int NEW_PRODUCT_ACTIVITY_REQUEST_CODE = 1;
     public static final int EDIT_PRODUCT_ACTIVITY_REQUEST_CODE = 2;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

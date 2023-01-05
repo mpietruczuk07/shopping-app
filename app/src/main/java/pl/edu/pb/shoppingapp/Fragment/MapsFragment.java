@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Looper;
@@ -27,10 +28,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.common.api.Response;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -53,25 +54,31 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import pl.edu.pb.shoppingapp.Constant.Constant;
 import pl.edu.pb.shoppingapp.Model.GooglePlaceModel;
 import pl.edu.pb.shoppingapp.Model.GoogleResponseModel;
 import pl.edu.pb.shoppingapp.Model.PlaceModel;
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.WebServices.MapsService;
+import pl.edu.pb.shoppingapp.WebServices.RetrofitInstance;
 import pl.edu.pb.shoppingapp.databinding.FragmentMapsBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private FragmentMapsBinding binding;
     private GoogleMap mGoogleMap;
-    private Boolean isLocationPermission = false;
+    private boolean isLocationPermission = false, isTrafficEnabled;
     private Location currentLocation;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
@@ -83,11 +90,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private List<GooglePlaceModel> googlePlaceModelList;
     private PlaceModel selectedPlaceModel;
 
-    private int radius = 5000;
+    private int radius = 20000;
 
     private static final int LOCATION_REQUEST_CODE = 1000;
     private static final int LOCATION_SENSOR = 2000;
-    private static final float ZOOM = 17;
+    private static final float ZOOM = 14;
 
     private static final String TAG = "MAPS_FRAGMENT";
 
@@ -97,8 +104,56 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         binding = FragmentMapsBinding.inflate(inflater, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
+        mapsService = RetrofitInstance.getRetrofitInstance().create(MapsService.class);
+        googlePlaceModelList = new ArrayList<>();
+
+        binding.mapTypeBtn.setOnClickListener(v->{
+            PopupMenu popupMenu = new PopupMenu(requireContext(), v);
+            popupMenu.getMenuInflater().inflate(R.menu.map_type_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.default_map_btn:
+                        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        break;
+                    case R.id.satellite_map_btn:
+                        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        break;
+                    case R.id.terrain_map_btn:
+                        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                        break;
+                }
+                return true;
+            });
+            popupMenu.show();
+        });
+
+        binding.trafficBtn.setOnClickListener(v -> {
+            if (isTrafficEnabled) {
+                if (mGoogleMap != null) {
+                    mGoogleMap.setTrafficEnabled(false);
+                    isTrafficEnabled = false;
+                }
+            } else {
+                if (mGoogleMap != null) {
+                    mGoogleMap.setTrafficEnabled(true);
+                    isTrafficEnabled = true;
+                }
+            }
+        });
 
         binding.currentLocationBtn.setOnClickListener(v -> getLocationUpdates());
+
+        binding.placesGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
+                if (checkedId != -1) {
+                    PlaceModel placeModel = Constant.places.get(checkedId - 1);
+                    selectedPlaceModel = placeModel;
+                    getPlaces(placeModel.getPlaceType());
+                }
+            }
+        });
 
         return binding.getRoot();
     }
@@ -110,6 +165,19 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_map);
         supportMapFragment.getMapAsync(this);
 
+        for (PlaceModel placeModel : Constant.places) {
+            Chip chip = new Chip(requireContext());
+            chip.setText(placeModel.getName());
+            chip.setId(placeModel.getId());
+            chip.setPadding(8, 8, 8, 8);
+            chip.setTextColor(getResources().getColor(R.color.white, null));
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.purple_200, null));
+            chip.setChipIcon(ResourcesCompat.getDrawable(getResources(), placeModel.getDrawableId(), null));
+            chip.setCheckable(true);
+            chip.setCheckedIconVisible(false);
+
+            binding.placesGroup.addView(chip);
+        }
     }
 
     @Override
@@ -327,9 +395,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
             if (currentLocation != null) {
                 mapsService.getPlaces(url).enqueue(new Callback<GoogleResponseModel>() {
-
                     @Override
-                    public void onResponse(Call<GoogleResponseModel> call, retrofit2.Response<GoogleResponseModel> response) {
+                    public void onResponse(Call<GoogleResponseModel> call, Response<GoogleResponseModel> response) {
                         Gson gson = new Gson();
                         String res = gson.toJson(response.body());
                         Log.d("TAG", "onResponse: " + res);
@@ -347,8 +414,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                                 } else {
                                     mGoogleMap.clear();
                                     googlePlaceModelList.clear();
-                                    radius += 1000;
-                                    getPlaces(placeName);
+//                                    radius += 1000;
+//                                    getPlaces(placeName);
+                                    Toast.makeText(getContext(), "There are no places", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
