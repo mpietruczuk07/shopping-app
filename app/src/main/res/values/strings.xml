@@ -92,5 +92,10 @@
     <string name="email_change_input">New email</string>
     <string name="password_change_input">New password</string>
 
+    <string name="theme_select">Select theme</string>
+
     <string name="API_KEY">AIzaSyCl1yGPZ3mpxxxxxxxAz2R-t7zcWVzrHUL9k</string>
+    <string name="system_preferences_theme">System preferences</string>
+    <string name="dark_theme">Dark</string>
+    <string name="light_theme">Light</string>
 </resources>

@@ -132,10 +132,8 @@ public class SettingsFragment extends Fragment {
                     .getSharedPreferences("user_notifications", Context.MODE_PRIVATE).edit();
             if (isChecked) {
                 editor.putBoolean("notifications", true);
-                System.out.println("Checked");
             } else {
                 editor.putBoolean("notifications", false);
-                System.out.println("Unchecked");
             }
             editor.apply();
         });

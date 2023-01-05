@@ -17,9 +17,11 @@ import pl.edu.pb.shoppingapp.databinding.FragmentSetThemeBinding;
 
 public class SetThemeFragment extends Fragment {
     private FragmentSetThemeBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetThemeBinding.inflate(inflater, container, false);
+
         int selectedDarkMode = requireActivity()
                 .getSharedPreferences("DARK_MODE", Context.MODE_PRIVATE)
                 .getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -32,7 +34,11 @@ public class SetThemeFragment extends Fragment {
                 break;
             case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
                 binding.radioSystem.setChecked(true);
-                break; }
+                break;
+        }
+
+        binding.backBtn.setOnClickListener(v-> getActivity().onBackPressed());
+
         binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             SharedPreferences.Editor editor = requireActivity()
                     .getSharedPreferences("DARK_MODE", Context.MODE_PRIVATE).edit();
@@ -44,19 +50,20 @@ public class SetThemeFragment extends Fragment {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_NO);
                         break;
-                        case R.id.radio_dark:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES);
-                break;
-                case R.id.radio_system:
-                    AppCompatDelegate
-                            .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    break;
+                    case R.id.radio_dark:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+                    case R.id.radio_system:
+                        AppCompatDelegate
+                                .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        break;
                 }
                 editor.apply();
             }
         });
+
         return binding.getRoot();
     }
 }
