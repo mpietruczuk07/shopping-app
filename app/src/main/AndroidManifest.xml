@@ -21,7 +21,7 @@
         tools:targetApi="33">
 
         <activity
-            android:name=".Activity.SetThemeActivity"
+            android:name=".activity.SetThemeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -29,7 +29,7 @@
         </activity>
 
         <service
-            android:name=".Service.NotificationService"
+            android:name=".service.NotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -44,28 +44,28 @@
             android:value="@string/default_notification_channel_id" />
 
         <activity
-            android:name=".Activity.ForgetPasswordActivity"
+            android:name=".activity.ForgetPasswordActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activity.RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activity.LoadingActivity"
+            android:name=".activity.LoadingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,9 +77,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".Activity.EditProductActivity" />
+        <activity android:name=".activity.EditProductActivity" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

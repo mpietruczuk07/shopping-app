@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context=".Fragment.SettingsFragment">
+    tools:context=".fragment.SettingsFragment">
 
     <io.github.florent37.shapeofview.shapes.ArcView
         android:layout_width="match_parent"
