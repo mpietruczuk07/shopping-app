@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new MapsFragment());
                     break;
                 case R.id.favourite_shops_btn:
-                replaceFragment(new FavouriteShopsFragment());
+                    replaceFragment(new FavouriteShopsFragment());
                     break;
                 case R.id.more_btn:
                     replaceFragment(new MoreFragment());
@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_view, fragment);
+        fragmentTransaction.replace(R.id.main_view, fragment, null);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 

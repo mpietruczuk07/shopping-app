@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -32,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import pl.edu.pb.shoppingapp.Activity.SetThemeActivity;
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.databinding.FragmentSettingsBinding;
 
@@ -138,16 +140,8 @@ public class SettingsFragment extends Fragment {
             editor.apply();
         });
 
-        binding.cardTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = new SetThemeFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_view, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+        binding.cardTheme.setOnClickListener(v->{
+            startActivity(new Intent(getActivity(), SetThemeActivity.class));
         });
 
         return binding.getRoot();

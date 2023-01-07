@@ -82,4 +82,8 @@ dependencies {
 
     //monitoring API responses
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+    //navigation
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
 }

@@ -34,6 +34,8 @@ public class MoreFragment extends Fragment {
         binding = FragmentMoreBinding.inflate(getLayoutInflater());
         firebaseAuth = FirebaseAuth.getInstance();
 
+        binding.backBtn.setOnClickListener(v-> getActivity().onBackPressed());
+
         binding.cardSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

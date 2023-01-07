@@ -3,41 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/emailChangeFragment">
-
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/emailChangeFragment"
-        android:name="pl.edu.pb.shoppingapp.Fragment.EmailChangeFragment"
-        android:label="fragment_email_change"
-        tools:layout="@layout/fragment_email_change" />
+        android:id="@+id/homeFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/authenticationFragment"
-        android:name="pl.edu.pb.shoppingapp.Fragment.AuthenticationFragment"
-        android:label="fragment_authentication"
-        tools:layout="@layout/fragment_authentication" >
-        <argument
-            android:name="isPassword"
-            app:argType="boolean"
-            android:defaultValue="false" />
-        <action
-            android:id="@+id/action_authenticationFragment_to_emailChangeFragment"
-            app:destination="@id/emailChangeFragment" />
-        <action
-            android:id="@+id/action_authenticationFragment_to_passwordChangeFragment"
-            app:destination="@id/passwordChangeFragment" />
-    </fragment>
+        android:id="@+id/mapsFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="pl.edu.pb.shoppingapp.Fragment.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
-        <action
-            android:id="@+id/action_settingsFragment_to_authenticationFragment"
-            app:destination="@id/authenticationFragment" />
-    </fragment>
+        android:id="@+id/favouriteShopsFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.FavouriteShopsFragment"
+        android:label="fragment_favourite_shops"
+        tools:layout="@layout/fragment_favourite_shops" />
     <fragment
-        android:id="@+id/passwordChangeFragment"
-        android:name="pl.edu.pb.shoppingapp.Fragment.PasswordChangeFragment"
-        android:label="fragment_password_change"
-        tools:layout="@layout/fragment_password_change" />
+        android:id="@+id/moreFragment"
+        android:name="pl.edu.pb.shoppingapp.Fragment.MoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" />
 </navigation>

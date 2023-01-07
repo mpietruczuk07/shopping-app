@@ -20,6 +20,14 @@
         android:theme="@style/Theme.ShoppingApp"
         tools:targetApi="33">
 
+        <activity
+            android:name=".Activity.SetThemeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <service
             android:name=".Service.NotificationService"
             android:exported="false">
