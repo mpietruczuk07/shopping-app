@@ -1,5 +1,8 @@
 package pl.edu.pb.shoppingapp.Model;
 
+import android.media.Image;
+import android.widget.ImageView;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -50,4 +53,5 @@ public class PhotoModel {
     public void setWidth(Integer width) {
         this.width = width;
     }
+
 }

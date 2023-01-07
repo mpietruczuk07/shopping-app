@@ -112,4 +112,16 @@
         app:tint="@color/purple_700"
         app:fabCustomSize="50dp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/place_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="26dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
 </RelativeLayout>
