@@ -28,7 +28,7 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="110dp"
                 android:layout_weight="0.5"
                 android:scaleType="centerCrop"
                 android:src="@color/black"
@@ -66,10 +66,12 @@
                         android:text="@{googlePlaceModel.userRatingsTotal!=null?`(`+String.valueOf(googlePlaceModel.userRatingsTotal)+`)`:``,default=`(100)`}" />
 
                     <ImageView
+                        android:id="@+id/save_location_btn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_baseline_favorite_24"
+                        android:onClick="@{()->listener.onSaveClick(googlePlaceModel)}"
+                        android:src="@{googlePlaceModel.saved?@drawable/ic_baseline_favorite_24:@drawable/ic_outline_favorite_border_24}"
                         app:tint="@color/purple_700" />
 
                 </RelativeLayout>
@@ -81,7 +83,7 @@
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Shop"
+                    android:text="@{googlePlaceModel.name!=null?googlePlaceModel.name:`No Name`,default=`Place Name`}"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -89,10 +91,10 @@
                     android:id="@+id/text_place_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Address"
+                    android:text="@{googlePlaceModel.vicinity!=null?googlePlaceModel.vicinity:`No Address`,default=`Place Address`}"
                     android:textColor="@color/black" />
 
             </LinearLayout>

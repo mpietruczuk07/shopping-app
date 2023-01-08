@@ -16,6 +16,10 @@ public class GooglePlaceAdapter extends RecyclerView.Adapter<GooglePlaceAdapter.
     private List<GooglePlaceModel> googlePlaceModelList;
     private NearLocationInterface nearLocationInterface;
 
+    public GooglePlaceAdapter(NearLocationInterface nearLocationInterface){
+        this.nearLocationInterface = nearLocationInterface;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
