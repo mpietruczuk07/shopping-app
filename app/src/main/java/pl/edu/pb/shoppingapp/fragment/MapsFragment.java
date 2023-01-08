@@ -181,6 +181,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.placeView.setItemAnimator(null);
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_map);
         supportMapFragment.getMapAsync(this);
