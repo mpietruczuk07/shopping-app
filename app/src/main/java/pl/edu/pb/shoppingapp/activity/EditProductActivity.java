@@ -9,26 +9,27 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import pl.edu.pb.shoppingapp.R;
+import pl.edu.pb.shoppingapp.databinding.ActivityEditProductBinding;
 
 public class EditProductActivity extends AppCompatActivity {
     public static final String EXTRA_EDIT_PRODUCT_TITLE = "title";
-    private EditText editTitleEditText;
+    private ActivityEditProductBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_product);
 
-        editTitleEditText = findViewById(R.id.edit_product_title);
+        binding = ActivityEditProductBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         if (getIntent().hasExtra(EXTRA_EDIT_PRODUCT_TITLE)) {
-            editTitleEditText.setText(getIntent().getStringExtra(EXTRA_EDIT_PRODUCT_TITLE));
+            binding.editProductTitle.setText(getIntent().getStringExtra(EXTRA_EDIT_PRODUCT_TITLE));
+            binding.spinner.setSelection(1);
         }
 
-        final Button button = findViewById(R.id.button_save);
-        button.setOnClickListener(v -> {
+        binding.buttonSave.setOnClickListener(v -> {
             Intent replyIntent = new Intent();
-            String title = editTitleEditText.getText().toString();
+            String title = binding.editProductTitle.getText().toString();
             replyIntent.putExtra(EXTRA_EDIT_PRODUCT_TITLE, title);
             setResult(RESULT_OK, replyIntent);
             finish();

@@ -17,8 +17,19 @@
 
         android:textSize="18sp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quantity">
+    </TextView>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner">
+    </Spinner>
+
     <EditText
-        android:id="@+id/edit_book_author"
+        android:id="@+id/product_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 

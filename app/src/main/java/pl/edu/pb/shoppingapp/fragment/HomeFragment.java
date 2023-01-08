@@ -28,6 +28,7 @@ import pl.edu.pb.shoppingapp.Product;
 import pl.edu.pb.shoppingapp.ProductViewModel;
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.databinding.FragmentHomeBinding;
+import pl.edu.pb.shoppingapp.databinding.ProductItemListBinding;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
@@ -90,13 +91,15 @@ public class HomeFragment extends Fragment {
     private class ProductHolder extends RecyclerView.ViewHolder {
         private TextView productTitleTextView;
         private TextView productQuantityTextView;
+        private TextView productDescriptionTextView;
         private Product product;
 
         public ProductHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.product_item_list, parent, false));
 
-            productTitleTextView = itemView.findViewById((R.id.product_title));
-            productQuantityTextView = itemView.findViewById((R.id.product_quantity));
+            productTitleTextView = itemView.findViewById((R.id.Title));
+            productQuantityTextView = itemView.findViewById((R.id.Quantity));
+            productDescriptionTextView = itemView.findViewById((R.id.Description));
 
             View productItem = itemView.findViewById(R.id.product_item);
 
