@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="googlePlaceModel"
             type="pl.edu.pb.shoppingapp.model.GooglePlaceModel" />
@@ -27,12 +28,12 @@
             android:weightSum="2">
 
             <ImageView
+                loadImage="@{googlePlaceModel.icon}"
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_weight="0.5"
                 android:scaleType="centerCrop"
-                android:src="@color/black"
-                loadImage="@{googlePlaceModel.icon}"/>
+                android:src="@color/black" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -51,11 +52,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/purple_700"
+                        android:text="@{googlePlaceModel.rating!=null?String.valueOf(googlePlaceModel.rating):`New`,default=3.4}"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        app:drawableStartCompat="@drawable/ic_baseline_star_24"
-                        android:text="@{googlePlaceModel.rating!=null?String.valueOf(googlePlaceModel.rating):`New`,default=3.4}"/>
+                        app:drawableStartCompat="@drawable/ic_baseline_star_24" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
