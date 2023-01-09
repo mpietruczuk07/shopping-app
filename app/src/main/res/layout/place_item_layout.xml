@@ -19,7 +19,8 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="5dp"
         android:elevation="5dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        android:background="?attr/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,15 +34,16 @@
                 android:layout_height="110dp"
                 android:layout_weight="0.5"
                 android:padding="10dp"
-                android:scaleType="centerCrop"
-                android:src="@color/black" />
+                android:scaleType="center"
+                android:src="?attr/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:background="?attr/colorPrimary">
 
                 <RelativeLayout
                     android:id="@+id/rating"
@@ -52,10 +54,10 @@
                         android:id="@+id/text_place_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTint="?attr/colorPrimary"
+                        android:drawableTint="?attr/colorPrimaryVariant"
                         android:text="@{googlePlaceModel.rating!=null?String.valueOf(googlePlaceModel.rating):`New`,default=3.4}"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         app:drawableStartCompat="@drawable/ic_baseline_star_24" />
 
@@ -65,6 +67,7 @@
                         android:layout_toEndOf="@id/text_place_rating"
                         android:paddingStart="5dp"
                         android:paddingEnd="1dp"
+                        android:textColor="@color/gray"
                         android:text="@{googlePlaceModel.userRatingsTotal!=null?`(`+String.valueOf(googlePlaceModel.userRatingsTotal)+`)`:``,default=`(100)`}" />
 
                     <ImageView
@@ -74,7 +77,7 @@
                         android:layout_alignParentEnd="true"
                         android:onClick="@{()->listener.onSaveClick(googlePlaceModel)}"
                         android:src="@{googlePlaceModel.saved?@drawable/ic_baseline_favorite_24:@drawable/ic_outline_favorite_border_24}"
-                        app:tint="@color/purple_700" />
+                        app:tint="?attr/colorAccent" />
 
                 </RelativeLayout>
 

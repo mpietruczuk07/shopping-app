@@ -94,8 +94,19 @@
 
     <string name="theme_select">Select theme</string>
 
-    <string name="API_KEY">AIzaSyCl1yGPZ3mpxxxxxxxAz2R-t7zcWVzrHUL9k</string>
+<!--    <string name="API_KEY">AIzaSyCl1yGPZ3mpxxxxxxxAz2R-t7zcWVzrHUL9k</string>-->
     <string name="system_preferences_theme">System preferences</string>
     <string name="dark_theme">Dark</string>
     <string name="light_theme">Light</string>
+
+    <string name="error">Error</string>
+    <string name="place_saved">Place saved</string>
+    <string name="place_removed">Place removed</string>
+    <string name="undo_action">Undo</string>
+    <string name="yes_answer">Yes</string>
+    <string name="no_answer">No</string>
+
+    <string name="remove_place_title">Remove place</string>
+    <string name="remove_place_question">Are you sure you want to remove this place?</string>
+    <string name="no_places">There are no places!</string>
 </resources>

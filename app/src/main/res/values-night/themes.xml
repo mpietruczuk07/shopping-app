@@ -36,4 +36,9 @@
         <item name="colorPrimaryDark">@color/amber_primary_dark</item>
         <item name="colorAccent">@color/orange_secondary_dark</item>
     </style>
+
+    <style name="Theme.ShoppingApp.PopupTheme" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:colorBackground">@color/gray</item>
+        <item name="android:textColor">@color/light_gray</item>
+    </style>
 </resources>

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -34,6 +35,7 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.Looper;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,13 +115,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     private DatabaseReference locationReference, userLocationReference;
     private MapStyleOptions mapStyleOptions;
 
-    private int radius = 20000;
+    private int radius = 10000;
 
     private static final int LOCATION_REQUEST_CODE = 1000;
     private static final int LOCATION_SENSOR = 2000;
     private static final float ZOOM = 14;
 
     private static final String TAG = "MAPS_FRAGMENT";
+    private static final String API_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,7 +140,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         mapStyleOptions = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style);
 
         binding.mapTypeBtn.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(requireContext(), v);
+            Context context = new ContextThemeWrapper(getContext(), R.style.Theme_ShoppingApp_PopupTheme);
+            PopupMenu popupMenu = new PopupMenu(context, v);
             popupMenu.getMenuInflater().inflate(R.menu.map_type_menu, popupMenu.getMenu());
 
             popupMenu.setOnMenuItemClickListener(item -> {
@@ -173,6 +177,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         binding.currentLocationBtn.setOnClickListener(v -> getLocationUpdates());
 
+        binding.resetBtn.setOnClickListener(v -> moveBackToLocation());
+
         binding.placesGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
@@ -193,6 +199,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         super.onViewCreated(view, savedInstanceState);
         binding.placeView.setItemAnimator(null);
 
+        boolean isNightModeOn = false;
+        int currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                isNightModeOn = false;
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                isNightModeOn = true;
+                break;
+        }
+
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_map);
         supportMapFragment.getMapAsync(this);
 
@@ -201,10 +218,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
             chip.setText(placeModel.getName());
             chip.setId(placeModel.getId());
             chip.setPadding(8, 8, 8, 8);
-            chip.setTextColor(getResources().getColor(R.color.white, null));
-            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.orange_secondary_dark));
             chip.setChipIcon(ResourcesCompat.getDrawable(getResources(), placeModel.getDrawableId(), null));
-            chip.setChipIconTint(getResources().getColorStateList(R.color.white));
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.orange_secondary_dark));
+
+            if (isNightModeOn) {
+                chip.setTextColor(getResources().getColor(R.color.light_gray, null));
+                chip.setChipIconTint(getResources().getColorStateList(R.color.light_gray));
+            } else {
+                chip.setTextColor(getResources().getColor(R.color.white, null));
+                chip.setChipIconTint(getResources().getColorStateList(R.color.white));
+            }
+
             chip.setIconStartPadding(10);
             chip.setCheckable(true);
             chip.setCheckedIconVisible(false);
@@ -415,7 +439,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         }
     }
 
-    //doesn't work - never shows up
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -433,18 +456,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
     private void getPlaces(String placeName) {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
-                    + currentLocation.getLatitude() + "," + currentLocation.getLongitude()
-                    + "&radius=" + radius + "&type=" + placeName + "&key=" +
-                    getResources().getString(R.string.API_KEY);
-
             if (currentLocation != null) {
+                String url = API_URL
+                        + currentLocation.getLatitude() + "," + currentLocation.getLongitude()
+                        + "&radius=" + radius + "&type=" + placeName + "&key=" +
+                        getResources().getString(R.string.API_KEY);
+
                 mapsService.getPlaces(url).enqueue(new Callback<GoogleResponseModel>() {
                     @Override
                     public void onResponse(Call<GoogleResponseModel> call, Response<GoogleResponseModel> response) {
                         Gson gson = new Gson();
                         String res = gson.toJson(response.body());
-                        Log.d("TAG", "onResponse: " + res);
+                        Log.d(TAG, "onResponse: " + res);
 
                         if (response.errorBody() == null) {
                             if (response.body() != null) {
@@ -461,23 +484,19 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                                     }
                                     googlePlaceAdapter.setGooglePlaceModelList(googlePlaceModelList);
                                 } else {
-                                    mGoogleMap.clear();
-                                    googlePlaceModelList.clear();
-                                    // googlePlaceAdapter.setGooglePlaceModelList(googlePlaceModelList);
-//                                    radius += 1000;
-//                                    getPlaces(placeName);
-                                    Toast.makeText(getContext(), "There are no places", Toast.LENGTH_SHORT).show();
+                                    moveBackToLocation();
+                                    Toast.makeText(getContext(), getString(R.string.no_places), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
-                            Log.d("TAG", "onResponse: " + response.errorBody());
-                            Toast.makeText(requireContext(), "Error: " + response.errorBody(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "onResponse: " + response.errorBody());
+                            Toast.makeText(requireContext(), getString(R.string.error) + response.errorBody(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<GoogleResponseModel> call, Throwable t) {
-                        Log.d("TAG", "onFailure: " + t);
+                        Log.d(TAG, "onFailure: " + t);
                     }
                 });
             }
@@ -542,15 +561,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     public void onSaveClick(GooglePlaceModel googlePlaceModel) {
         if (userSavedPlaceId.contains(googlePlaceModel.getPlaceId())) {
             new AlertDialog.Builder(requireContext())
-                    .setTitle("Remove place")
-                    .setMessage("Are you sure you want to remove this place?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setTitle(getString(R.string.remove_place_title))
+                    .setMessage(getString(R.string.remove_place_question))
+                    .setPositiveButton(getString(R.string.yes_answer), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             removePlace(googlePlaceModel);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.no_answer), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -590,8 +609,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         googlePlaceModelList.get(index).setSaved(false);
         googlePlaceAdapter.notifyDataSetChanged();
 
-        Snackbar.make(binding.getRoot(), "Place removed", Snackbar.LENGTH_LONG)
-                .setAction("Undo", new View.OnClickListener() {
+        Snackbar.make(binding.getRoot(), getString(R.string.place_removed), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo_action), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         userSavedPlaceId.add(googlePlaceModel.getPlaceId());
@@ -609,10 +628,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     }
 
     private void saveUserLocation(String placeId) {
-        System.out.println("SAVED");
         userSavedPlaceId.add(placeId);
         userLocationReference.setValue(userSavedPlaceId);
-        Toast.makeText(getContext(), "Place saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.place_saved), Toast.LENGTH_SHORT).show();
     }
 
     private void saveLocation(SavedPlaceModel savedPlaceModel) {
@@ -639,5 +657,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
             }
         });
+    }
+
+    private void moveBackToLocation() {
+        mGoogleMap.clear();
+        googlePlaceModelList.clear();
+        googlePlaceAdapter.setGooglePlaceModelList(googlePlaceModelList);
+        moveToLocation(currentLocation);
     }
 }
