@@ -4,11 +4,15 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -18,6 +22,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -53,6 +58,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -105,6 +111,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     private GooglePlaceAdapter googlePlaceAdapter;
     private ArrayList<String> userSavedPlaceId;
     private DatabaseReference locationReference, userLocationReference;
+    private MapStyleOptions mapStyleOptions;
 
     private int radius = 20000;
 
@@ -126,6 +133,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         locationReference = FirebaseDatabase.getInstance().getReference("Places");
         userLocationReference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(firebaseAuth.getUid()).child("Saved locations");
+
+        mapStyleOptions = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style);
 
         binding.mapTypeBtn.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(requireContext(), v);
@@ -178,6 +187,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         return binding.getRoot();
     }
 
+    @SuppressLint({"ResourceType", "UseCompatLoadingForColorStateLists"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -192,13 +202,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
             chip.setId(placeModel.getId());
             chip.setPadding(8, 8, 8, 8);
             chip.setTextColor(getResources().getColor(R.color.white, null));
-            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.purple_200, null));
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.orange_secondary_dark));
             chip.setChipIcon(ResourcesCompat.getDrawable(getResources(), placeModel.getDrawableId(), null));
+            chip.setChipIconTint(getResources().getColorStateList(R.color.white));
+            chip.setIconStartPadding(10);
             chip.setCheckable(true);
             chip.setCheckedIconVisible(false);
 
             binding.placesGroup.addView(chip);
         }
+
         setUpRecyclerView();
         getUserSavedLocations();
     }
@@ -206,6 +219,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mGoogleMap = googleMap;
+
+        int currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                mGoogleMap.setMapStyle(mapStyleOptions);
+                break;
+        }
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             isLocationPermission = true;

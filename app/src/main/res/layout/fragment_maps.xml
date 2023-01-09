@@ -23,13 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:elevation="10dp"
-            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundColor="?attr/colorOnPrimary"
             app:boxCornerRadiusBottomEnd="25dp"
             app:boxCornerRadiusBottomStart="25dp"
             app:boxCornerRadiusTopEnd="25dp"
             app:boxCornerRadiusTopStart="25dp"
-            app:boxStrokeColor="@color/white"
-            app:boxStrokeWidth="0dp"
+            app:boxStrokeColor="@color/amber_primary_dark"
+            app:boxStrokeWidth="2dp"
             app:endIconMode="clear_text"
             app:hintEnabled="false"
             app:layout_anchor="@id/view"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_location_searching_24"
                 android:drawablePadding="10dp"
-                android:drawableTint="@color/purple_700"
+                android:drawableTint="?attr/colorAccent"
                 android:hint="@string/search_place_hint"
                 android:inputType="text"
                 android:maxLines="1"
@@ -64,7 +64,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/maps_coordinate"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_margin="10dp"
+        android:padding="5dp">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/places_group"
@@ -82,11 +84,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/places_list"
         android:layout_alignParentEnd="true"
-        android:layout_margin="15dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="?attr/colorOnPrimary"
         android:src="@drawable/ic_baseline_layers_24"
-        app:tint="@color/purple_700"
-        app:fabCustomSize="40dp"/>
+        app:fabCustomSize="40dp"
+        app:tint="?attr/colorAccent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/traffic_btn"
@@ -94,11 +99,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/map_type_btn"
         android:layout_alignParentEnd="true"
-        android:layout_margin="15dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="?attr/colorOnPrimary"
         android:src="@drawable/ic_baseline_traffic_24"
-        app:tint="@color/purple_700"
-        app:fabCustomSize="40dp"/>
+        app:fabCustomSize="40dp"
+        app:tint="?attr/colorAccent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/current_location_btn"
@@ -107,9 +116,9 @@
         android:layout_below="@+id/traffic_btn"
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="?attr/colorOnPrimary"
         android:src="@drawable/ic_baseline_my_location_24"
-        app:tint="@color/purple_700"
+        app:tint="?attr/colorAccent"
         app:fabCustomSize="50dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -117,7 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingLeft="8dp"

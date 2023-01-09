@@ -32,6 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_weight="0.5"
+                android:padding="10dp"
                 android:scaleType="centerCrop"
                 android:src="@color/black" />
 
@@ -51,7 +52,7 @@
                         android:id="@+id/text_place_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTint="@color/purple_700"
+                        android:drawableTint="?attr/colorPrimary"
                         android:text="@{googlePlaceModel.rating!=null?String.valueOf(googlePlaceModel.rating):`New`,default=3.4}"
                         android:textColor="@color/black"
                         android:textSize="18dp"
