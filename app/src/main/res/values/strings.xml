@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Shopping App</string>
-    <string name="book_deleted">Book deleted</string>
+    <string name="app_name" translatable="false">Shopping App</string>
+    <string name="book_deleted" translatable="false">Book deleted</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
-    <string name="email_hint">Email</string>
+    <string name="email_hint" translatable="false">Email</string>
     <string name="signup_text">Sign up</string>
     <string name="login_text">Login</string>
     <string name="save">Save</string>
@@ -14,7 +14,7 @@
     <string name="reset_password_text">Reset password</string>
     <string name="login_string">Already have an account? Login <b>here</b>.</string>
     <string name="verify_email">Verify email</string>
-    <string name="sample_email">email@email.com</string>
+    <string name="sample_email" translatable="false">email@email.com</string>
 
     <string name="username_required">Username is required!</string>
     <string name="username_error">Username error!</string>
@@ -42,20 +42,20 @@
     <string name="biometric_hardware_unavailable">The biometric hardware is unavailable! Please check if it does work properly.</string>
     <string name="authentication_failed">Authentication failed!</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home" translatable="false">Home</string>
     <string name="menu_maps">Maps</string>
     <string name="menu_saved_shops">Saved shops</string>
-    <string name="menu_search">Search product</string>
+    <string name="menu_search" translatable="false">Search product</string>
     <string name="menu_more">More</string>
 
     <string name="settings_header">Settings</string>
     <string name="notifications_header">Notifications history</string>
     <string name="help_header">Help</string>
-    <string name="info_header">Info</string>
+    <string name="info_header" translatable="false">Info</string>
     <string name="notification_settings">Show notifications</string>
     <string name="logout_header">Logout</string>
     <string name="logged_out_text">Logged out successfully!</string>
-    <string name="app_version"><b>App version:</b> alpha 0.5</string>
+    <string name="app_version" translatable="false"><b>App version:</b> alpha 0.5</string>
 
     <string name="theme_change">Select app theme</string>
     <string name="edit_username">Edit username</string>
@@ -63,8 +63,8 @@
     <string name="edit_username_hint">New username</string>
 
     <string name="location_permission_title">Location permission</string>
-    <string name="location_permission_message">requires location permission.</string>
-    <string name="positive_button_ok">Ok</string>
+    <string name="location_permission_message">Requires location permission.</string>
+    <string name="positive_button_ok" translatable="false">Ok</string>
     <string name="location_permission_denied">Location access denied. You can change it in your phone settings.</string>
     <string name="location_sensor_enabled">Location sensor is now enabled.</string>
     <string name="location_sensor_disabled">Location sensor is disabled. Enable for the best experience with this app.</string>
@@ -72,18 +72,18 @@
 
     <string name="search_place_hint">Search place</string>
     <string name="current_location">Current location</string>
-    <string name="info_dialog_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+    <string name="info_dialog_text" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
         aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
         pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
         deserunt mollit anim id est laborum. </string>
-    <string name="app_info">App info</string>
+    <string name="app_info" translatable="false">App info</string>
 
-    <string name="default_notification_channel_id">GENERAL</string>
+    <string name="default_notification_channel_id" translatable="false">GENERAL</string>
 
-    <string name="notification_title">Notification title</string>
-    <string name="notification_body">Notification body</string>
+    <string name="notification_title" translatable="false">Notification title</string>
+    <string name="notification_body" translatable="false">Notification body</string>
     <string name="notification_permission_denied">Notification permission denied. You can change it in your phone settings.</string>
     <string name="notification_permission_info">Without notification permission you will not see push notifications.</string>
 
