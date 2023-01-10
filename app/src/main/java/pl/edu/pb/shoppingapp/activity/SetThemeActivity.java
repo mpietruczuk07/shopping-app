@@ -49,17 +49,23 @@ public class SetThemeActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radio_light:
+                        //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_NO);
+                        recreate();
                         break;
                     case R.id.radio_dark:
+                        //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES);
+                        recreate();
                         break;
                     case R.id.radio_system:
+                        //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                         AppCompatDelegate
                                 .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                         editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        recreate();
                         break;
                 }
                 editor.apply();

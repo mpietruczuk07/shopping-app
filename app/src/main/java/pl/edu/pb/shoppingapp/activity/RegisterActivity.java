@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Pattern;
 
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.model.UserModel;
@@ -30,20 +33,23 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.backBtn.setOnClickListener(v -> {
             onBackPressed();
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         binding.signupBtn.setOnClickListener(v -> {
             registerUser();
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         binding.loginText.setOnClickListener(v -> {
             onBackPressed();
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
     }
 
@@ -61,7 +67,12 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (email.isEmpty()) {
             binding.signupEmail.setError(getText(R.string.email_required));
             binding.signupEmail.requestFocus();
-        } else if (password.isEmpty()) {
+        }
+        else if(!(Patterns.EMAIL_ADDRESS.matcher(email).matches())){
+            binding.signupEmail.setError(getText(R.string.email_incorrect));
+            binding.signupEmail.requestFocus();
+        }
+        else if (password.isEmpty()) {
             binding.signupPassword.setError(getText(R.string.password_required));
             binding.signupPassword.requestFocus();
         } else if (password.length() < MIN_PASSWORD_LENGTH) {
@@ -95,6 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                                     getString(R.string.email_confirmation),
                                                                     Toast.LENGTH_SHORT).show();
                                                             onBackPressed();
+                                                            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
                                                         }
                                                     });
                                                 }
@@ -105,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this,  getText(R.string.register_success) +
                                 " " +getText(R.string.email_confirmation), Toast.LENGTH_SHORT).show();
                         onBackPressed();
+                        overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
                     }
                     else{
                         Toast.makeText(RegisterActivity.this, getText(R.string.register_error) +

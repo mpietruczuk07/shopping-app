@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,21 @@ public class AuthenticationFragment extends Fragment {
         isPassword = getArguments().getBoolean("isPassword");
         binding.inputEditEmail.setText(firebaseAuth.getCurrentUser().getEmail());
 
-        binding.backBtn.setOnClickListener(v -> getActivity().onBackPressed());
+        binding.backBtn.setOnClickListener(v -> {
+            if (isStateSaved()) {
+                requireActivity().onBackPressed();
+                requireActivity().overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
+            } else {
+                Fragment fragment = new SettingsFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                        .replace(R.id.main_view, fragment)
+                        .addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
         binding.confirmEditBtn.setOnClickListener(v -> {
             email = binding.inputEditEmail.getText().toString().trim();
@@ -54,6 +69,9 @@ public class AuthenticationFragment extends Fragment {
 
             if (email.isEmpty()) {
                 binding.inputEditEmail.setError(getText(R.string.email_required));
+                binding.inputEditEmail.requestFocus();
+            } else if (!(Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+                binding.inputEditEmail.setError(getText(R.string.email_incorrect));
                 binding.inputEditEmail.requestFocus();
             } else if (password.isEmpty()) {
                 binding.inputEditPassword.setError(getText(R.string.password_required));
@@ -74,13 +92,15 @@ public class AuthenticationFragment extends Fragment {
                                 fragment = new EmailChangeFragment();
                             }
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.main_view, fragment);
-                            fragmentTransaction.addToBackStack(null);
+                            FragmentTransaction fragmentTransaction = fragmentManager
+                                    .beginTransaction()
+                                    .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                                    .replace(R.id.main_view, fragment)
+                                    .addToBackStack(null);
                             fragmentTransaction.commit();
                         } else {
-                            Log.d("TAG", "onComplete: " + task.getException());
-                            Toast.makeText(requireContext(), "Error:" + task.getException(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "onComplete: " + task.getException());
+                            Toast.makeText(requireContext(), getString(R.string.error) + task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

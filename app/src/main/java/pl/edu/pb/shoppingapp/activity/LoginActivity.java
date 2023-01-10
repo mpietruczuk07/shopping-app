@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,11 +26,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.forgetPasswordText.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         binding.loginBtn.setOnClickListener(v -> {
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.signupBtn.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
     }
 
@@ -48,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.isEmpty()) {
             binding.loginEmail.setError(getText(R.string.email_required));
+            binding.loginEmail.requestFocus();
+        } else if (!(Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+            binding.loginEmail.setError(getText(R.string.email_incorrect));
             binding.loginEmail.requestFocus();
         } else if (password.isEmpty()) {
             binding.loginPassword.setError(getText(R.string.password_required));
@@ -62,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
                             finish();
                         } else {
                             firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -75,8 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(LoginActivity.this, getText(R.string.login_error) + " " + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -10,10 +10,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -23,7 +21,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -137,7 +134,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         userLocationReference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(firebaseAuth.getUid()).child("Saved locations");
 
-        mapStyleOptions = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style);
+        mapStyleOptions = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_dark_mode_style);
 
         binding.mapTypeBtn.setOnClickListener(v -> {
             Context context = new ContextThemeWrapper(getContext(), R.style.Theme_ShoppingApp_PopupTheme);

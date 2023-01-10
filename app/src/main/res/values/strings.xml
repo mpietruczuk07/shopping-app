@@ -19,6 +19,7 @@
     <string name="username_required">Username is required!</string>
     <string name="username_error">Username error!</string>
     <string name="email_required">Email is required!</string>
+    <string name="email_incorrect">This email is incorrect!</string>
     <string name="email_updated">Email updated successfully! Please confirm it and login again.</string>
     <string name="password_updated">Password updated successfully! Please login again.</string>
     <string name="password_required">Password is required!</string>
@@ -99,7 +100,7 @@
     <string name="dark_theme">Dark</string>
     <string name="light_theme">Light</string>
 
-    <string name="error">Error</string>
+    <string name="error">Error: </string>
     <string name="place_saved">Place saved</string>
     <string name="place_removed">Place removed</string>
     <string name="undo_action">Undo</string>

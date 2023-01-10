@@ -81,7 +81,19 @@ public class SettingsFragment extends Fragment {
         }
 
         binding.backBtn.setOnClickListener(v -> {
-            requireActivity().onBackPressed();
+            if (isStateSaved()) {
+                requireActivity().onBackPressed();
+                requireActivity().overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
+            } else {
+                Fragment fragment = new MoreFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                        .replace(R.id.main_view, fragment)
+                        .addToBackStack(null);
+                fragmentTransaction.commit();
+            }
         });
 
         binding.usernameText.setOnClickListener(v -> {
@@ -96,9 +108,11 @@ public class SettingsFragment extends Fragment {
                 Fragment fragment = new AuthenticationFragment();
                 fragment.setArguments(data);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_view, fragment);
-                fragmentTransaction.addToBackStack(null);
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                        .replace(R.id.main_view, fragment)
+                        .addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -111,9 +125,11 @@ public class SettingsFragment extends Fragment {
                 Fragment fragment = new AuthenticationFragment();
                 fragment.setArguments(data);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_view, fragment);
-                fragmentTransaction.addToBackStack(null);
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                        .replace(R.id.main_view, fragment)
+                        .addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -140,8 +156,9 @@ public class SettingsFragment extends Fragment {
             editor.apply();
         });
 
-        binding.cardTheme.setOnClickListener(v->{
+        binding.cardTheme.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), SetThemeActivity.class));
+            requireActivity().overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         return binding.getRoot();

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,15 +22,18 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         binding = ActivityForgetPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.backBtn.setOnClickListener(v->{
             onBackPressed();
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         binding.forgetBtn.setOnClickListener(v -> {
             resetPassword();
+            overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
     }
 
@@ -41,6 +45,10 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             binding.emailFieldReset.setError(getText(R.string.email_required));
             binding.emailFieldReset.requestFocus();
         }
+        else if(!(Patterns.EMAIL_ADDRESS.matcher(email).matches())){
+            binding.emailFieldReset.setError(getText(R.string.email_incorrect));
+            binding.emailFieldReset.requestFocus();
+        }
         else {
             firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -49,6 +57,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         Toast.makeText(ForgetPasswordActivity.this,
                                 getText(R.string.email_reset_confirmation), Toast.LENGTH_SHORT).show();
                         onBackPressed();
+                        overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
                     }
                     else {
                         Toast.makeText(ForgetPasswordActivity.this, getText(R.string.email_reset_error) + " " + task.getException(), Toast.LENGTH_SHORT).show();

@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 import pl.edu.pb.shoppingapp.activity.LoginActivity;
 import pl.edu.pb.shoppingapp.R;
 import pl.edu.pb.shoppingapp.databinding.FragmentMoreBinding;
@@ -34,16 +36,16 @@ public class MoreFragment extends Fragment {
         binding = FragmentMoreBinding.inflate(getLayoutInflater());
         firebaseAuth = FirebaseAuth.getInstance();
 
-        binding.backBtn.setOnClickListener(v-> getActivity().onBackPressed());
-
         binding.cardSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment fragment = new SettingsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_view, fragment);
-                fragmentTransaction.addToBackStack(null);
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                        .replace(R.id.main_view, fragment)
+                        .addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -53,15 +55,18 @@ public class MoreFragment extends Fragment {
             public void onClick(View v) {
                 Fragment fragment = new NotificationsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_view, fragment);
-                fragmentTransaction.addToBackStack(null);
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+                        .replace(R.id.main_view, fragment)
+                        .addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
 
         binding.cardHelp.setOnClickListener(v->{
             startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:shoppingapp@gmail.com")));
+            getActivity().overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         binding.cardInfo.setOnClickListener(v->infoDialog());
@@ -70,6 +75,7 @@ public class MoreFragment extends Fragment {
             FirebaseAuth.getInstance().signOut();
             Toast.makeText(getContext(), getText(R.string.logged_out_text), Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getActivity(), LoginActivity.class));
+            requireActivity().overridePendingTransition(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim, androidx.navigation.ui.R.anim.nav_default_pop_exit_anim);
         });
 
         return binding.getRoot();
